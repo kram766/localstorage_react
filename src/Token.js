@@ -1,41 +1,43 @@
 import React, { Component } from 'react';
-
+import {Redirect} from 'react-router-dom';
 class Token extends Component {
     state = { 
-        rememberMe:localStorage.getItem('rememberMe')
+        rememberMe:localStorage.getItem('rememberMe'),
+        token:""
      }
 
-    // componentDidMount=()=>{
-    //     const token = this.state.rememberMe ? this.state.rememberMe : "";
-    //     Axios.post('http://localhost:5000/token',token)
-    //     .then(
-    //         result=>{
-    //             console.log(result);
-    //         }
-    //     )
-    //     .catch();
-    // }
-   redirecthandler=()=>{
-         {window.location.href="/danger"} 
-   }
+//    redirecthandler=()=>{
+//          {window.location.href="/danger"} 
+//    }
    deleteStorage =()=>{
        localStorage.removeItem('rememberMe');
-       {window.location.href="/login"}
+    
    }
+isAuthenticated = () =>{
+    const token = localStorage.getItem('rememberMe');
+    return token;
+}
     render() { 
-        const token = this.state.rememberMe;
+        // const token = this.state.rememberMe;
+        const alreadyAuthenticate = this.isAuthenticated();
         return (
-            token ? 
+            // token ? 
+            <>
+            {!alreadyAuthenticate ? <Redirect to={{ pathname:'/login'}} /> :
+
             <div className="token">
                 <p>Token</p>
                 <form>
                     <input type="text" />
                 </form>
-                <button onClick={this.deleteStorage}>Logout</button>
+                <a href="/login" onClick={this.deleteStorage}>Logout</a>
             </div>
-            :this.redirecthandler()
-         );
-    }
+            
+            }
+            </>
+            );
+        }   
+    
 }
  
 export default Token;

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 class Reserved extends Component {
     state = {  }
-    deleteStorage =()=>{
-      localStorage.removeItem('rememberMe');
-      {window.location.href="/login"}
-  }
+  //   deleteStorage =()=>{
+  //     localStorage.removeItem('rememberMe');
+  //     {window.location.href="/login"}
+  // }
     render() { 
         return ( 
         <>

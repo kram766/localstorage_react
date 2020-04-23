@@ -22,13 +22,23 @@ handlesubmit = (e) =>{
   .then(result =>{
       const token = result.data.token;
       this.setState({token})
+      console.log(result)
       localStorage.setItem('rememberMe', token);
 
-    if(result.status===200) {window.location.href="/reserved"}
+      // const headers = new Headers();
+      // headers.append('Content-Type', 'application/json', {'Authorization': 'Bearer ' + this.state.token} );
+
+    // if(result.status===200) {window.location.href="/reserved"}
 
   })
   .catch();
 
+}
+postRoute = () =>{
+  const token = localStorage.getItem('rememberMe') ? localStorage.getItem('rememberMe') :"";
+  Axios.post('http://localhost:5000/token',{ headers: {"authorization" : `bearer ${token}`} })
+  .then(res=>{console.log(res)})
+  .catch();
 }
   render() { 
     return ( 
@@ -46,6 +56,7 @@ handlesubmit = (e) =>{
           <input type="password" name="password" value={this.state.password} onChange={this.changehandler} />
           <input type="submit" value="Submit" />
         </form>
+        <button type="submit" onClick={this.postRoute}>Post Route</button>
       </div>
       </>
      );
